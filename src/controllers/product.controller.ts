@@ -34,4 +34,30 @@ export const addProduct = async (req: Request, res: Response): Promise<void> => 
         res.status(400).json({ error: 'Bad Request' });
         return;
     }
-}
+};
+
+export const updateProduct = async (req: Request, res: Response): Promise<void> => {
+    const idProduct = Number(req.params.id);
+    const productData = req.body as Product;
+
+    if (
+        !productData.name ||
+        !productData.amount ||
+        !productData.price ||
+        !productData.category ||
+        !productData.state ||
+        !productData.idUser
+    ) {
+        res.status(400).json({ error: 'All fields are required' });
+        return;
+    }
+
+    try {
+        const updatedProduct = await productService.updateProduct({ ...productData, idProduct });
+        res.json(updatedProduct);
+        return;
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+        return;
+    }
+};

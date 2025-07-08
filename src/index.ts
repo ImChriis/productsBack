@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import userRoutes from './routes/users.routes';
 import productRoutes from './routes/product.routes';
+import configurationRoutes from './routes/configuration.routes';
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 //Routes
 app.use('/users', userRoutes);
 app.use('/products', productRoutes);
+app.use('/config', configurationRoutes);
 
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
     console.error(err.stack);
